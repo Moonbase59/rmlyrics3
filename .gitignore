@@ -1,0 +1,13 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+rmlyrics3c
+
+# C extensions
+*.so
+
+# Source and module stuff
+__init__.py
+mp3.py
+test_mp3.py
