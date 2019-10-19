@@ -14,5 +14,5 @@ test_mp3.py
 
 # Windows pyinstaller stuff
 build/
-dist/
+dist/*
 !dist/rmlyrics3.exe

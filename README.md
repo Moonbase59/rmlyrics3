@@ -14,9 +14,23 @@ This code has been tested with thousands of files but I can give no guarantees. 
 
 ## Installation
 
+### Install on OSes that have Python installed
+
 Just copy `rmlyrics3` to a suitable location (i.e., `~/bin` or `/usr/local/bin`) and make it executable (`chmod +x rmlyrics3`).
 
-The file `test_rmlyrics3.py` is a developer’s unit test. It is _not needed_ for normal operation.
+All other files are _not needed_ for normal operation. These are mainly building and unit testing scripts.
+
+### Install on Windows with no Python installed
+
+There is a Windows 32-bit executable `rmlyrics3.exe` in the `dist/` folder which you can copy to a suitable location. It should run on Windows 7 and above.
+
+### Rebuilding the Windows executable
+
+Should you need to rebuild `rmlyrics3.exe` yourself, get [PyInstaller](https://www.pyinstaller.org/), change to the directory into which you have git cloned _rmlyrics3_ and do a:
+
+```bash
+pyinstaller rmlyrics3.spec
+```
 
 ## Usage
 
