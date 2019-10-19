@@ -409,6 +409,8 @@ def remove_lyrics3(path, dryrun=False):
             f.close()
             os.remove(path)
             os.rename(path + '.tmp', path)
+    else:
+        mp3file.close()
 
 def main():
     """Main program
