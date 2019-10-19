@@ -24,6 +24,8 @@ All other files are _not needed_ for normal operation. These are mainly building
 
 There is a Windows 32-bit executable `rmlyrics3.exe` in the `dist/` folder which you can copy to a suitable location. It should run on Windows 7 and above.
 
+The prebuilt Windows executable is meant to be used on systems with no Python installed. It brings its own Python interpreter and needed dependencies. Thus, it’s a little larger and takes a little longer to start than the pure Python version.
+
 ### Rebuilding the Windows executable
 
 Should you need to rebuild `rmlyrics3.exe` yourself, get [PyInstaller](https://www.pyinstaller.org/), change to the directory into which you have git cloned _rmlyrics3_ and do a:
