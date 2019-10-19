@@ -98,6 +98,7 @@ class Mp3Reader(object):
         self.current_block = None
 
         self.blocks = []
+        self.warnings = 0
         begin_main_content = 0
 
         # easier for corner case ("ID3" multiple times before sync)
@@ -276,6 +277,7 @@ class Mp3Reader(object):
             self.blocks.append(mp3_data_block)
         else:
             print("WARNING: MP3 file is not valid:", path)
+            self.warnings += 1
             data_block = Block(main_size, "MP3", begin_main_content)
             self.blocks.append(data_block)
 
@@ -384,6 +386,12 @@ def remove_lyrics3(path, dryrun=False):
     by reading all blocks (ID3 tags, APE tags, Lyrics3 tags, MP3 audio)
     and rewriting the file, skipping the Lyrics3 tag.
     """
+
+    # statistics
+    stats = dict()
+    stats['changed'] = False
+    stats['warnings'] = 0
+
     mp3file = Mp3Reader(path=path)
 
     # Does it contain a Lyrics3 or Lyrics3v2 tag?
@@ -404,13 +412,17 @@ def remove_lyrics3(path, dryrun=False):
                     f.write(data)
 
         print(", ".join(blocks), ")", sep='')
+        stats['warnings'] = mp3file.warnings
         mp3file.close()
         if not dryrun:
             f.close()
             os.remove(path)
             os.rename(path + '.tmp', path)
+            stats['changed'] = True
     else:
         mp3file.close()
+
+    return stats
 
 def main():
     """Main program
@@ -420,11 +432,18 @@ def main():
         epilog='Please report any issues to https://github.com/Moonbase59/rmlyrics3/issues.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
-    parser.add_argument('-r', '--recursive', action='store_true', default=False, help='Search through subfolders')
-    parser.add_argument('-d', '--dry-run', '--dryrun', action='store_true', default=False, help='Dry run; files not changed')
+    parser.add_argument('-r', '--recursive', action='store_true', default=False, help='search through subfolders')
+    parser.add_argument('-s', '--stats', action='store_true', default=False, help='show statistics')
+    parser.add_argument('-d', '--dry-run', '--dryrun', action='store_true', default=False, help='dry run; files not changed')
     parser.add_argument('path', nargs='+', help='Path of a file or a folder of files.')
     args = parser.parse_args()
     extension = '.mp3' # use lowercase
+
+    # for statistics
+    stats = dict()
+    stats['checked'] = 0
+    stats['changed'] = 0
+    stats['warnings'] = 0
 
     # Parse paths, simulate Linux' shell glob for Windows
     full_paths = [os.path.join(os.getcwd(), path2)
@@ -446,10 +465,21 @@ def main():
                 full_paths += glob.glob(path.replace('[', '[[]') + '/*')
 
     for f in sorted(files):
-        remove_lyrics3(f, args.dry_run)
+        stat = remove_lyrics3(f, args.dry_run)
+        stats['checked'] += 1
+        if stat['changed'] == True:
+            stats['changed'] += 1
+        if stat['warnings'] > 0:
+            stats['warnings'] += 1
 
+    if args.stats:
+        print()
+        print(stats['checked'], ' files checked, ',
+              stats['changed'], ' files modified, ',
+              stats['warnings'], ' files are corrupt.',
+              sep='')
 
-__version_info__ = ('0', '7')
+__version_info__ = ('0', '7', '1')
 __version__ = '.'.join(__version_info__)
 
 APPNAME = "rmlyrics3 " + __version__

@@ -48,9 +48,10 @@ This is also what you get when you type `rmlyrics3 -h` or `rmlyrics3 --help`:
     optional arguments:
       -h, --help            show this help message and exit
       -v, --version         show program's version number and exit
-      -r, --recursive       Search through subfolders (default: False)
+      -r, --recursive       search through subfolders (default: False)
+      -s, --stats           show statistics (default: False)
       -d, --dry-run, --dryrun
-                            Dry run; files not changed (default: False)
+                            dry run; files not changed (default: False)
 
 ## Examples
 
