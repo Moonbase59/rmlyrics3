@@ -416,7 +416,9 @@ def main():
     """Main program
     Usage: rmlyrics3 [-h] [-r] [-d] path [path ...]
     """
-    parser = argparse.ArgumentParser(description='Remove Lyrics3 tags from MP3 files.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(description='Remove Lyrics3 tags from MP3 files.',
+        epilog='Please report any issues to https://github.com/Moonbase59/rmlyrics3/issues.',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
     parser.add_argument('-r', '--recursive', action='store_true', default=False, help='Search through subfolders')
     parser.add_argument('-d', '--dry-run', '--dryrun', action='store_true', default=False, help='Dry run; files not changed')
@@ -424,8 +426,12 @@ def main():
     args = parser.parse_args()
     extension = '.mp3' # use lowercase
 
-    # Parse paths
-    full_paths = [os.path.join(os.getcwd(), path) for path in args.path]
+    # Parse paths, simulate Linux' shell glob for Windows
+    full_paths = [os.path.join(os.getcwd(), path2)
+                  for path in args.path
+                  # work around glob bracket problem
+                  # by making "[" a range with this one character
+                  for path2 in glob.glob(path.replace('[', '[[]'))]
     files = set()
 
     for path in full_paths:
