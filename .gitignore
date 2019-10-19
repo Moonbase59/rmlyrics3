@@ -11,3 +11,8 @@ rmlyrics3c
 __init__.py
 mp3.py
 test_mp3.py
+
+# Windows pyinstaller stuff
+build/
+dist/
+!dist/rmlyrics3.exe

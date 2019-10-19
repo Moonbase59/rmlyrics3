@@ -404,6 +404,7 @@ def remove_lyrics3(path, dryrun=False):
                     f.write(data)
 
         print(", ".join(blocks), ")", sep='')
+        mp3file.close()
         if not dryrun:
             f.close()
             os.remove(path)
