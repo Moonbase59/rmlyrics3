@@ -80,6 +80,19 @@ For a **dry run** (without actually changing files), use the `--dry-run` (`-d`) 
 rmlyrics3 --dry-run -r ~/Music/MyMP3/
 ```
 
+Perform a **dry-run** (`-d`) and show some statistics (`-s`):
+```bash
+rmlyrics3 -d -s -r ~/Music/MyMP3/
+```
+
+The statistics will display how many files were checked, how many were (or will have to be) modified, and how many are corrupt, something like this:
+```
+147231 files checked, 1492 files to modify, 3 files are corrupt.
+```
+```
+147231 files checked, 1492 files modified, 3 files are corrupt.
+```
+
 ## Technical
 
 _rmlyrics3_ tries to segment the MP3 file into _blocks_. It knows about the following block types:
