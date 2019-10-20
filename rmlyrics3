@@ -389,6 +389,7 @@ def remove_lyrics3(path, dryrun=False):
 
     # statistics
     stats = dict()
+    stats['match'] = False
     stats['changed'] = False
     stats['warnings'] = 0
 
@@ -400,6 +401,7 @@ def remove_lyrics3(path, dryrun=False):
              if block.type == 'LYRICS' or block.type == 'LYRICS200']
 
     if match:
+        stats['match'] = True
         print(path, "... (", end='')
         blocks = []
         if not dryrun:
@@ -442,6 +444,7 @@ def main():
     # for statistics
     stats = dict()
     stats['checked'] = 0
+    stats['matches'] = 0
     stats['changed'] = 0
     stats['warnings'] = 0
 
@@ -467,6 +470,8 @@ def main():
     for f in sorted(files):
         stat = remove_lyrics3(f, args.dry_run)
         stats['checked'] += 1
+        if stat['match'] == True:
+            stats['matches'] += 1
         if stat['changed'] == True:
             stats['changed'] += 1
         if stat['warnings'] > 0:
@@ -474,12 +479,18 @@ def main():
 
     if args.stats:
         print()
-        print(stats['checked'], ' files checked, ',
-              stats['changed'], ' files modified, ',
-              stats['warnings'], ' files are corrupt.',
-              sep='')
+        if args.dry_run:
+            print(stats['checked'], ' files checked, ',
+                  stats['matches'], ' files to modify, ',
+                  stats['warnings'], ' files are corrupt.',
+                  sep='')
+        else:
+            print(stats['checked'], ' files checked, ',
+                  stats['changed'], ' files modified, ',
+                  stats['warnings'], ' files are corrupt.',
+                  sep='')
 
-__version_info__ = ('0', '7', '1')
+__version_info__ = ('0', '7', '2')
 __version__ = '.'.join(__version_info__)
 
 APPNAME = "rmlyrics3 " + __version__
