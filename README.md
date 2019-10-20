@@ -38,7 +38,7 @@ pyinstaller rmlyrics3.spec
 
 This is also what you get when you type `rmlyrics3 -h` or `rmlyrics3 --help`:
 
-    usage: rmlyrics3 [-h] [-v] [-r] [-d] path [path ...]
+    usage: rmlyrics3 [-h] [-v] [-r] [-s] [-d] path [path ...]
 
     Remove Lyrics3 tags from MP3 files.
 
@@ -52,6 +52,8 @@ This is also what you get when you type `rmlyrics3 -h` or `rmlyrics3 --help`:
       -s, --stats           show statistics (default: False)
       -d, --dry-run, --dryrun
                             dry run; files not changed (default: False)
+
+    Please report any issues to https://github.com/Moonbase59/rmlyrics3/issues.
 
 ## Examples
 
