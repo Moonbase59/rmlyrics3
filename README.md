@@ -1,5 +1,7 @@
 # rmlyrics3
 
+**If you like what you got, please consider to [![Donate with Paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/donate/?hosted_button_id=PBPR63362LDEU). Thank you! ❤️**
+
 A **_Lyrics3_ tag remover** for MP3 files, written in Python.
 
 Before ID3v2 came around, [Lyrics3](http://id3.org/Lyrics3) and [Lyrics3v2](http://id3.org/Lyrics3v2) had their uses (extending the 30-char limit, placing synced lyrics), but nowadays they are a nuisance for most of us. Plus, we have the lyrics frames `USLT` and `SYLT` in ID3v2.
